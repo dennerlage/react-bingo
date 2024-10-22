@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import logo from './assets/logo.png';
 
 // Função auxiliar para mapear o número à letra correspondente
 const getBingoLetter = (number: number): string => {
@@ -33,7 +34,7 @@ const Carousel: React.FC<CarouselProps> = ({ images, interval = 3000, logoUrl })
       {/* Exibir o logotipo acima do carrossel */}
       {logoUrl && (
         <div className="mb-4">
-          <img src={logoUrl} alt="Logo" className="w-32 h-auto object-contain" />
+          <img src={logoUrl} alt="Logo" className="w-68 h-auto object-contain" />
         </div>
       )}
       <div className="carousel-container relative w-full h-64 overflow-hidden">
@@ -68,7 +69,7 @@ const BingoLimeirense: React.FC = () => {
     'https://via.placeholder.com/300x150?text=Patrocinador+4',
   ];
 
-  const logoUrl = 'https://via.placeholder.com/100x50?text=Logo';
+  const logoUrl = logo;
 
   const generateRandomNumber = (): number => {
     const min = 1;
@@ -122,7 +123,7 @@ const BingoLimeirense: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-row items-center justify-center min-h-screen bg-gray-100 p-4 overflow-hidden space-x-6">
+    <div className="flex flex-row items-center justify-center min-h-screen bg-blue-600 p-4 overflow-hidden space-x-6">
       
       {/* Carrossel de patrocinadores - lado esquerdo */}
       <div className="w-1/4">
@@ -130,13 +131,13 @@ const BingoLimeirense: React.FC = () => {
       </div>
 
       {/* Conteúdo do Bingo no centro */}
-      <div className="flex flex-col items-center justify-center space-y-6 w-1/2">
-        <h1 className="text-5xl font-bold text-gray-800 mb-4">Bingo Limeirense</h1>
+      <div className="flex flex-col items-center justify-center space-y-4 w-1/2">
+        <h1 className="text-5xl font-bold text-gray-800 mb-5 border bg-white shadow-lg rounded-lg p-3">Bingo Limeirense</h1>
 
         {/* Último número sorteado com a letra correspondente */}
-        <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-sm text-center">
+        <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-7xl h-[24rem] text-center">
           <h2 className="text-3xl font-semibold">Último número sorteado:</h2>
-          <div className="text-9xl font-extrabold text-red-600 mt-4" style={{ lineHeight: '1.1' }}>
+          <div className="text-[18rem] font-extrabold text-black-600" style={{ lineHeight: '1.1' }}>
             {lastNumber ? `${getBingoLetter(lastNumber)}-${lastNumber}` : '---'}
           </div>
         </div>
@@ -144,7 +145,7 @@ const BingoLimeirense: React.FC = () => {
         {/* Números sorteados com área fixa e scroll interno */}
         <div className="grid grid-cols-5 gap-2 max-h-40 overflow-y-auto">
           {drawnNumbers.map((number, index) => (
-            <div key={index} className="text-2xl bg-gray-200 p-4 rounded-lg shadow-md">
+            <div key={index} className="text-2xl bg-gray-200 bg-white shadow-lg rounded-lg p-8 shadow-md font-bold">
               {getBingoLetter(number)}-{number}
             </div>
           ))}
@@ -158,7 +159,7 @@ const BingoLimeirense: React.FC = () => {
               isPaused ? 'bg-green-500 hover:bg-green-700' : 'bg-red-500 hover:bg-red-700'
             }`}
           >
-            {isPaused ? 'Iniciar Sorteio' : 'Pausar'}
+            {isPaused ? (drawnNumbers.length > 0 ? 'Reiniciar Sorteio' : 'Iniciar Sorteio') : 'Pausar'}
           </button>
           <button onClick={resetBingo} className="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-700">
             Resetar Bingo
@@ -166,7 +167,7 @@ const BingoLimeirense: React.FC = () => {
           {/* Botão para sortear um número a qualquer momento */}
           <button
             onClick={drawNumber}
-            className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-700"
+            className="px-4 py-2 bg-orange-500 text-white rounded-md hover:bg-orange-700"
           >
             Sortear Agora
           </button>
