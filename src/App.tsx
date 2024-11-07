@@ -201,7 +201,7 @@ const BingoLimeirense: React.FC = () => {
           />
         </div>
 
-        <div className="bg-gray-200 p-4 rounded-lg shadow-md text-center">
+        <div className="none bg-gray-200 p-4 rounded-lg shadow-md text-center">
           <h3 className="text-xl font-semibold">Próximo número em: {timeRemaining} segundos</h3>
         </div>
       </div>
