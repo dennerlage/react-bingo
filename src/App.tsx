@@ -1,5 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import logo from './assets/logo.png';
+import patrocinador_1 from './assets/patrocinador_1.png';
+import patrocinador_2 from './assets/patrocinador_2.png';
+import patrocinador_3 from './assets/patrocinador_3.png';
+import patrocinador_4 from './assets/patrocinador_4.png';
+import patrocinador_5 from './assets/patrocinador_5.png';
+import patrocinador_6 from './assets/patrocinador_6.png';
+import patrocinador_7 from './assets/patrocinador_7.png';
+import patrocinador_8 from './assets/patrocinador_8.png';
+import patrocinador_9 from './assets/patrocinador_9.png';
+import patrocinador_10 from './assets/patrocinador_10.png';
+import patrocinador_11 from './assets/patrocinador_11.png';
+import patrocinador_12 from './assets/patrocinador_12.png';
+import patrocinador_13 from './assets/patrocinador_13.png';
+import patrocinador_14 from './assets/patrocinador_14.png';
+
 
 // Função auxiliar para mapear o número à letra correspondente
 const getBingoLetter = (number: number): string => {
@@ -65,10 +80,20 @@ const BingoLimeirense: React.FC = () => {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const sponsorImages: string[] = [
-    'https://via.placeholder.com/300x150?text=Patrocinador+1',
-    'https://via.placeholder.com/300x150?text=Patrocinador+2',
-    'https://via.placeholder.com/300x150?text=Patrocinador+3',
-    'https://via.placeholder.com/300x150?text=Patrocinador+4',
+    patrocinador_1,
+    patrocinador_2,
+    patrocinador_3,
+    patrocinador_4,
+    patrocinador_5,
+    patrocinador_6,
+    patrocinador_7,
+    patrocinador_8,
+    patrocinador_9,
+    patrocinador_10,
+    patrocinador_11,
+    patrocinador_12,
+    patrocinador_13,
+    patrocinador_14,
   ];
 
   const logoUrl = logo;
@@ -84,17 +109,22 @@ const BingoLimeirense: React.FC = () => {
   };
 
   const drawNumber = (): void => {
-    if (drawnNumbers.length >= 75) {
-      setOpenModal(true);
-      setAllNumbersDrawn(true); // Define que todos os números foram sorteados
-      if (timerRef.current) clearInterval(timerRef.current);
-      return;
+    if (!allNumbersDrawn) {
+      const newNumber = generateRandomNumber();
+      setLastNumber(newNumber);
+      setDrawnNumbers((prevNumbers) => [...prevNumbers, newNumber]);
+      setTimeRemaining(intervalTime);
     }
-    const newNumber = generateRandomNumber();
-    setLastNumber(newNumber);
-    setDrawnNumbers((prevNumbers) => [...prevNumbers, newNumber]);
-    setTimeRemaining(intervalTime);
   };
+  
+  // Esse useEffect monitora o tamanho de drawnNumbers
+  useEffect(() => {
+    if (drawnNumbers.length >= 75) {
+      setAllNumbersDrawn(true);
+      setOpenModal(true);
+      if (timerRef.current) clearInterval(timerRef.current);
+    }
+  }, [drawnNumbers]);
 
   useEffect(() => {
     if (!isPaused && !allNumbersDrawn) {
@@ -160,7 +190,7 @@ const BingoLimeirense: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-5 gap-2 max-h-40 overflow-y-auto w-full">
+        <div className="grid grid-cols-5 gap-2 max-h-[7rem] overflow-y-auto w-full">
           {drawnNumbers.map((number, index) => (
             <div key={index} className="text-lg sm:text-xl bg-gray-200 shadow-lg rounded-lg p-2 font-bold text-center">
               {getBingoLetter(number)}-{number}
@@ -201,8 +231,9 @@ const BingoLimeirense: React.FC = () => {
           />
         </div>
 
-        <div className="bg-gray-200 p-4 rounded-lg shadow-md text-center" style={{ display: 'none'}}>
+        <div className="bg-gray-200 p-2 rounded-lg shadow-md text-center">
           <h3 className="text-xl font-semibold">Próximo número em: {timeRemaining} segundos</h3>
+          <h3 className="text-xl font-semibold">Números sorteados: {drawnNumbers.length}</h3>
         </div>
       </div>
 
